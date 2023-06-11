@@ -1,9 +1,8 @@
-// import EditorJS from '@editorjs/editorjs';
+import EditorJS from '@editorjs/editorjs';
 import type EditorJSType from '@editorjs/editorjs';
 import edjsHtml from 'editorjs-html';
 import { FC, memo, useEffect, useRef } from 'react';
 import { linkToolParser } from './linkToolParser';
-import dynamic from 'next/dynamic';
 
 // const EditorJS = dynamic(() => import('@editorjs/editorjs'), {
 //   ssr: false
@@ -60,63 +59,63 @@ export const Editorjs: FC<Props> = memo(function Editorjs(props) {
 
   const editorRef = useRef<EditorJSType | null>(null);
   const holderRef = useRef<HTMLDivElement>(null);
-  const initRef = useRef(false);
+  // const initRef = useRef(false);
 
   useEffect(() => {
-    if (!initRef.current) {
-      initRef.current = true;
-      // if (!editorRef.current) {///
-      import('@editorjs/editorjs').then(EditorJS => {
-        const editor = new EditorJS.default({
-          tools: {
-            header: {
-              class: require('@editorjs/header')/* Header as any */,
-              config: {
-                placeholder: 'Enter a header',
-                levels: [2, 3, 4, 5, 6],
-                defaultLevel: 2
-              }
-            },
-            list: require('@editorjs/list'),
-            linkTool: {
-              class: require('@editorjs/link'),
-              config: {
-                endpoint: '/api/url-preview', // Your backend endpoint for url data fetching,
-              }
-            },
-            image: {
-              // https://github.com/editor-js/image
-              class: require('@editorjs/image'),
-              config: {
-                endpoints: {
-                  // Upload file
-                  byFile: '/api/image-upload', // Your backend file uploader endpoint
-                  // Upload by URL
-                  byUrl: '/api/image-upload', // Your endpoint that provides uploading by Url
-                }
-              }
-            },
+    // if (!initRef.current) {
+    //   initRef.current = true;
+    if (!editorRef.current) {
+      // import('@editorjs/editorjs').then(EditorJS => {
+      const editor = new EditorJS({
+        tools: {
+          header: {
+            class: require('@editorjs/header')/* Header as any */,
+            config: {
+              placeholder: 'Enter a header',
+              levels: [2, 3, 4, 5, 6],
+              defaultLevel: 2
+            }
           },
-          holder: holderRef.current!,
-          onReady: () => {
-            // editorRef.current = editor;
-            // editor.blocks.renderFromHTML('<p style="color: red">Voyons voir comment rend le fil d\'ariane.2</p>');
+          list: require('@editorjs/list'),
+          linkTool: {
+            class: require('@editorjs/link'),
+            config: {
+              endpoint: '/api/url-preview', // Your backend endpoint for url data fetching,
+            }
           },
-          // autofocus: true,
-          placeholder: 'Let\'s write an awesome story!',
-          data: DEFAULT_INITIAL_DATA,
-          onChange: async (/* api, event */) => {
-            let content = await editor.saver.save();
+          image: {
+            // https://github.com/editor-js/image
+            class: require('@editorjs/image'),
+            config: {
+              endpoints: {
+                // Upload file
+                byFile: '/api/image-upload', // Your backend file uploader endpoint
+                // Upload by URL
+                byUrl: '/api/image-upload', // Your endpoint that provides uploading by Url
+              }
+            }
+          },
+        },
+        holder: holderRef.current!,
+        onReady: () => {
+          // editorRef.current = editor;
+          // editor.blocks.renderFromHTML('<p style="color: red">Voyons voir comment rend le fil d\'ariane.2</p>');
+        },
+        // autofocus: true,
+        placeholder: 'Let\'s write an awesome story!',
+        data: DEFAULT_INITIAL_DATA,
+        onChange: async (/* api, event */) => {
+          let content = await editor.saver.save();
 
-            console.log(content);
-            // https://github.com/pavittarx/editorjs-html
-            // Alternative: https://github.com/miadabdi/editorjs-parser
-            const html = edjsParser.parse(content);
-            console.log(html);
-          },
-        });
-        editorRef.current = editor;
+          console.log(content);
+          // https://github.com/pavittarx/editorjs-html
+          // Alternative: https://github.com/miadabdi/editorjs-parser
+          const html = edjsParser.parse(content);
+          console.log(html);
+        },
       });
+      editorRef.current = editor;
+      // });
     }
     return () => {
       // This code also cleans up when hot reloading, which reinitializes each time the code changes.
@@ -127,7 +126,7 @@ export const Editorjs: FC<Props> = memo(function Editorjs(props) {
       if (editorRef.current?.destroy) {
         editorRef.current?.destroy();
         editorRef.current = null;
-        initRef.current = false;
+        // initRef.current = false;
       }
     };
   }, []);
