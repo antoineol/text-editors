@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -24,4 +24,27 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+} */
+
+@layer components {
+  h1 {
+    @apply text-2xl mt-6 mb-3
+  }
+
+  h2 {
+    @apply text-xl mt-4 mb-2
+  }
+
+  a {
+    color: darkblue;
+    text-decoration: underline;
+  }
+
+  .card {
+    @apply shadow
+  }
+
+  .container {
+    @apply w-[1000px] max-w-full px-8 m-auto
+  }
 }

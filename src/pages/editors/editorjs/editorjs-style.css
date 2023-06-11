@@ -1,0 +1,9 @@
+.cdx-list__item {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 0.375em !important;
+}
+
+.codex-editor {
+  @apply shadow
+}
