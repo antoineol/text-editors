@@ -1,12 +1,11 @@
-import { Inter } from 'next/font/google';
-import { BlockNote } from './editors/BlockNote';
-import { Lexical } from './editors/lexical/Lexical';
-import { NoSSR } from './utils';
 import dynamic from 'next/dynamic';
+import { Inter } from 'next/font/google';
+import { BlockNote } from '../components/editors/BlockNote';
+import { Lexical } from '../components/editors/lexical/Lexical';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const Editorjs = dynamic(() => import("./editors/editorjs/Editorjs").then(exports => exports.Editorjs), { ssr: false });
+const Editorjs = dynamic(() => import("../components/editors/editorjs/Editorjs").then(exports => exports.Editorjs), { ssr: false });
 
 export default function Home() {
   return (

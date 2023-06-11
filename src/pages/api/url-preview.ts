@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import ogs from "open-graph-scraper";
-import { LinkToolMeta } from "../editors/editorjs/linkToolParser";
+import { LinkToolMeta } from "../../components/editors/editorjs/linkToolParser";
 
 type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
