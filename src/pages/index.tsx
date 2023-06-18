@@ -16,12 +16,12 @@ export default function Home() {
     <main
       className={`flex min-h-screen pb-10 flex-col space-y-3 ${inter.className}`}
     >
-      <h1 className='container'>Text editors benchmark</h1>
+      {/* <h1 className='container'>Text editors benchmark</h1> */}
       <h2 className='container'><a href="https://editorjs.io/getting-started/" target="_blank" rel="noopener noreferrer">Editor.js</a></h2>
       {/* <div className="card"> */}
       <Editorjs />
       {/* </div> */}
-      <div>The best candidate</div>
+      {/* <div>The best candidate</div>
 
       <div className="container">
         <h2><a href="https://www.blocknotejs.org/docs/introduction" target='_blank'>BlockNode</a> </h2>
@@ -35,7 +35,7 @@ export default function Home() {
           <Lexical />
         </div>
         <div>Seems low-level and complex, very few onboarding doc or tuto. But <a href="https://github.com/facebook/lexical/tree/main/packages/lexical-playground" target='_blank'>the playground</a> should cover all the features we want.</div>
-      </div>
+      </div> */}
     </main>
   );
 }

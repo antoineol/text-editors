@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import ogs from "open-graph-scraper";
 
 // https://github.com/jshemas/openGraphScraper
 

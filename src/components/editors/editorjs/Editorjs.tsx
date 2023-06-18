@@ -131,5 +131,5 @@ export const Editorjs: FC<Props> = memo(function Editorjs(props) {
     };
   }, []);
   // pl-16
-  return <div ref={holderRef} className="prose max-w-full pl-16 pr-8" />;
+  return <div ref={holderRef} className="prose prose-img:m-0 max-w-full pl-16 pr-8" />;
 });
