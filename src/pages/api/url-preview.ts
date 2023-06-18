@@ -1,7 +1,12 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import ogs from "open-graph-scraper";
-import { LinkToolMeta } from "../../components/editors/editorjs/linkToolParser";
+import type {
+  ImageObject,
+  OgObject,
+  TwitterImageObject,
+} from "open-graph-scraper/dist/lib/types";
+
+import type { LinkToolMeta } from "../../../../front/src/editor/editorjs/linkToolParser";
 
 type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
@@ -34,15 +39,10 @@ export default function handler(
       success: 0,
     });
   }
-  // const options = { url: "http://ogp.me/" };
   const options = { url };
   ogs(options)
-    .then((data) => {
+    .then((data: any) => {
       const { error, /* html, */ result /* , response */ } = data;
-      // console.log("error:", error); // This returns true or false. True if there was an error. The error itself is inside the result object.
-      // console.log("html:", html); // This contains the HTML of page
-      // console.log("result:", result); // This contains all of the Open Graph results
-      // console.log("response:", response); // This contains response from the Fetch API
       if (error) throw result;
       const {
         ogTitle,
@@ -56,7 +56,6 @@ export default function handler(
         twitterImage,
         favicon,
       } = result;
-      console.log("ogSiteName", ogSiteName);
 
       res.status(200).json({
         success: 1,
@@ -65,19 +64,25 @@ export default function handler(
           site_name: ogSiteName,
           description: ogDescription || dcDescription || twitterDescription,
           image: {
-            url:
-              ogImage?.find((i) => !!i?.url)?.url ||
-              twitterImage?.find((i) => !!i?.url)?.url ||
-              favicon,
+            url: ogToImageUrl(ogImage) || ogToImageUrl(twitterImage) || favicon,
           },
           // And additional fields we want to store?
         },
       });
     })
-    .catch((err) => {
+    .catch((err: any) => {
       console.error(err);
       res.status(500).json({
         success: 0,
       });
     });
+}
+
+function ogToImageUrl(ogImage: OgObject["ogImage"] | OgObject["twitterImage"]) {
+  if (!ogImage || typeof ogImage === "string") return ogImage;
+  if (Array.isArray(ogImage))
+    return (ogImage as (ImageObject | TwitterImageObject)[]).find(
+      (i) => !!i?.url
+    )?.url;
+  return ogImage.url;
 }
