@@ -1,3 +1,4 @@
+import { LinkToolMeta } from "@/components/editors/editorjs/linkToolParser";
 import type { NextApiRequest, NextApiResponse } from "next";
 import ogs from "open-graph-scraper";
 import type {
@@ -5,8 +6,6 @@ import type {
   OgObject,
   TwitterImageObject,
 } from "open-graph-scraper/dist/lib/types";
-
-import type { LinkToolMeta } from "../../../../front/src/editor/editorjs/linkToolParser";
 
 type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
@@ -84,5 +83,5 @@ function ogToImageUrl(ogImage: OgObject["ogImage"] | OgObject["twitterImage"]) {
     return (ogImage as (ImageObject | TwitterImageObject)[]).find(
       (i) => !!i?.url
     )?.url;
-  return ogImage.url;
+  return (ogImage as any).url;
 }

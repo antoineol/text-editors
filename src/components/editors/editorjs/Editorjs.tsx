@@ -1,7 +1,7 @@
 import EditorJS from '@editorjs/editorjs';
 import type EditorJSType from '@editorjs/editorjs';
 import edjsHtml from 'editorjs-html';
-import { FC, memo, useEffect, useRef } from 'react';
+import { FC, memo, useEffect, useRef, useState } from 'react';
 import { linkToolParser } from './linkToolParser';
 
 // const EditorJS = dynamic(() => import('@editorjs/editorjs'), {
@@ -57,6 +57,8 @@ interface Props {}
 export const Editorjs: FC<Props> = memo(function Editorjs(props) {
   const {} = props;
 
+  const [count, setCount] = useState(0);
+
   const editorRef = useRef<EditorJSType | null>(null);
   const holderRef = useRef<HTMLDivElement>(null);
   // const initRef = useRef(false);
@@ -105,6 +107,7 @@ export const Editorjs: FC<Props> = memo(function Editorjs(props) {
         placeholder: 'Let\'s write an awesome story!',
         data: DEFAULT_INITIAL_DATA,
         onChange: async (/* api, event */) => {
+          setCount(c => c + 1);
           let content = await editor.saver.save();
 
           console.log(content);
@@ -131,5 +134,8 @@ export const Editorjs: FC<Props> = memo(function Editorjs(props) {
     };
   }, []);
   // pl-16
-  return <div ref={holderRef} className="prose prose-img:m-0 max-w-full pl-16 pr-8" />;
+  return <>
+    <div>Changed {count} time{count > 1 ? 's' : ''}</div>
+    <div ref={holderRef} className="prose prose-img:m-0 max-w-full pl-16 pr-8" />
+  </>;
 });
