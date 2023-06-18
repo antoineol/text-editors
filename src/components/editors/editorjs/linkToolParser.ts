@@ -1,4 +1,4 @@
-import { OutputBlockData, OutputData } from "@editorjs/editorjs";
+import { OutputBlockData } from "@editorjs/editorjs";
 
 export interface LinkToolMeta {
   title: string;
